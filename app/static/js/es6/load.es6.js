@@ -27,12 +27,10 @@ Game.Load.prototype = {
   },
 
   newGame: function(){
-    alert('new');
     this.game.state.start('play');
   },
 
   loadGame: function(){
-    alert('load');
     this.game.state.start('play');
   }
 };
