@@ -15,12 +15,31 @@
   function initPhaser(){
     game = new Phaser.Game(700, 500, Phaser.AUTO, 'game');
 
-    game.state.add('splash', Game.Splash); //MY LOGO
-    game.state.add('load', Game.Load);   //PRELOAD ALL ASSETS
-    game.state.add('menu', Game.Menu);   //START MENU
-    game.state.add('play', Game.Play);   //TEH GAMEZZZ
+    game.state.add('splash', Game.Splash);    //MY LOGO
+    game.state.add('load', Game.Load);        //MENU
+    game.state.add('play', Game.Play);        //TEH GAMEZZZ
+    game.state.add('dungeon', Game.Dungeon);  //DUNGEON
+    game.state.add('combat', Game.Combat);    //COMBAT
 
 
-    game.state.start('splash');
+
+    game.state.start('combat');
   }
 })();
+/*
+
+
+BUGS:
+changing states w/ players (destroy() prior to switch?)
+
+
+
+
+
+
+
+
+
+
+
+*/
