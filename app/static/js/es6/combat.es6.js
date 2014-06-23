@@ -15,6 +15,21 @@ var timer2 = 0;
 var swings;
 var swings2;
 var swing1, swing2, swing3, swing4, swing5, swing6;
+var user;
+
+
+function ajax(url, type, data={}, success= r => console.log(r), dataType='html'){
+  $.ajax({
+    url:url,
+    type:type,
+    dataType:dataType,
+    data:data,
+    success:success
+  });
+}
+ajax('/find', 'get', null, response=>{
+  user = response.user;
+}, 'json');
 
 Game.Combat.prototype = {
   preload: function(){
@@ -36,6 +51,19 @@ Game.Combat.prototype = {
     this.game.load.image('swing4', '/img/assets/battle/swipe1.png');
     this.game.load.image('swing5', '/img/assets/battle/swing2.png');
     this.game.load.image('swing6', '/img/assets/battle/swipe3.png');
+    this.game.load.image('healthP', '/img/assets/battle/healthbarPclean.png');
+    this.game.load.image('healthE', '/img/assets/battle/healthbarEclean.png');
+    this.game.load.image('1', '/img/assets/battle/1.png');
+    this.game.load.image('2', '/img/assets/battle/2.png');
+    this.game.load.image('3', '/img/assets/battle/3.png');
+    this.game.load.image('4', '/img/assets/battle/4.png');
+    this.game.load.image('5', '/img/assets/battle/5.png');
+    this.game.load.image('6', '/img/assets/battle/6.png');
+    this.game.load.image('7', '/img/assets/battle/7.png');
+    this.game.load.image('8', '/img/assets/battle/8.png');
+    this.game.load.image('9', '/img/assets/battle/9.png');
+    this.game.load.image('10', '/img/assets/battle/10.png');
+    this.game.load.image('bar', '/img/assets/battle/singleBar.png');
   },
 
   create: function(){
@@ -56,14 +84,13 @@ Game.Combat.prototype = {
     this.player = this.game.add.sprite(120, 245, 'player');
     this.player.scale.setTo(1.5, 1.5);
     this.player.frame = 7;
-
-    this.myWeapon = this.game.add.sprite(122, 242, 'stick');
-    this.myWeapon.scale.setTo(0.3,0.3);
-
+    this.player.health = 10;
+    this.player.defense = 0;
 
     this.enemy = this.game.add.sprite(545, 245, 'enemy');
     this.enemy.scale.setTo(1.5, 1.5);
     this.enemy.frame = 70;
+    this.enemy.health = 10;
 
     this.enemyWeapon = this.game.add.sprite(550, 255, 'dagger');
     this.enemyWeapon.frame = 0;
@@ -88,6 +115,25 @@ Game.Combat.prototype = {
     this.swings2 = this.game.add.group();
     this.swings2.scale.set(0.5, 0.5);
     swings2 = this.swings2;
+
+    this.health = this.game.add.image(25, 25, 'healthP');
+    this.health.scale.setTo(0.9, 1);
+    this.healthE = this.game.add.image(475, 30, 'healthE');
+    this.healthE.scale.setTo(0.9, 1);
+
+    this.weaponCheck();
+
+
+    this.healthBar = this.game.add.group();
+    for(var i = 0; i < this.player.health; i++){
+      var space = i * 15;
+      this.healthBar.create(30 + space, 45, 'bar').scale.setTo(2,1);
+    }
+    this.healthBarEnemy = this.game.add.group();
+    for(var j = 0; j < this.enemy.health; j++){
+      var space2 = j * 15;
+      this.healthBarEnemy.create(640 - space2, 48, 'bar').scale.setTo(2,1);
+    }
   },
 
   update: function(){
@@ -120,6 +166,8 @@ Game.Combat.prototype = {
     else if(this.cursors.up.isDown && myTurn && this.cursor.position.y === 450){
       this.cursor.position.y = 400;
     }
+
+    this.checkDead();
   },
 
   render: function(){
@@ -259,7 +307,6 @@ Game.Combat.prototype = {
       }
     }
     if(firstCreate2){
-      console.log('happen once');
       if(timer2 === 1){
         this.swing4 = this.swings2.create(1175, 410, 'swing4');
         this.swing4.scale.x = -1;
@@ -306,18 +353,69 @@ Game.Combat.prototype = {
   },
 
   dealDamage: function(){
+    var number;
     if(myTurn){
-      console.log('-');
+      if(user.weapon === 'stick'){
+        this.weapon.damage = this.game.rnd.integerInRange(1, 5);
+        number = this.weapon.damage.toString();
+        var realDmg = this.weapon.damage - this.player.defense;
+        this.dmg = this.game.add.image(550, 150, number);
+        this.dmg.scale.setTo(2, 2);
+        this.enemy.health -= realDmg;
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, this.killNum, this);
+        this.updateHealthBars();
+      }
+    }
+    else if(!myTurn){
+      this.enemy.weaponDmg = this.game.rnd.integerInRange(1,3);
+      number = this.enemy.weaponDmg.toString();
+      console.log(number);
+      this.dmg = this.game.add.image(120, 150, number);
+      this.dmg.scale.setTo(2, 2);
+      this.player.health -= number;
+      this.game.time.events.add(Phaser.Timer.SECOND * 1, this.killNum, this);
+      this.updateHealthBars();
+    }
+  },
+
+  weaponCheck: function(){
+    if(user.weapon === 'stick'){
+      this.weapon = this.game.add.sprite(135, 250, 'stick');
+      this.weapon.scale.setTo(0.2, 0.2);
+    }
+  },
+
+  killNum: function(){
+    this.dmg.destroy();
+  },
+
+  updateHealthBars: function(){
+    if(!myTurn){
+      this.healthBar.destroy();
+      this.healthBar = this.game.add.group();
+      for(var i = 0; i < this.player.health; i++){
+        var space = i * 15;
+        this.healthBar.create(30 + space, 45, 'bar').scale.setTo(2,1);
+      }
+    }
+    if(myTurn){
+      this.healthBarEnemy.destroy();
+      this.healthBarEnemy = this.game.add.group();
+      for(var j = 0; j < this.enemy.health; j++){
+        var space2 = j * 15;
+        this.healthBarEnemy.create(640 - space2, 48, 'bar').scale.setTo(2,1);
+      }
+    }
+  },
+
+  checkDead: function(){
+    if(this.player.health < 1){
+      // game.state.start('deathScreen');
+      console.log('dead');
+    }
+    if(this.enemy.health < 1){
+      // game.state.start('return');
+      console.log('enemy dead');
     }
   }
 };
-
-
-/*
-  hp & hp bars at top    pokemon? FF?
-  show HP loss in red above whoever lost hp
-  show player loss
-
-
-
-*/

@@ -31,6 +31,7 @@
 
 BUGS:
 changing states w/ players (destroy() prior to switch?)
+game.state.shutdown()?
 
 
 

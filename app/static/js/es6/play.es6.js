@@ -1,13 +1,12 @@
 /* global Phaser, Game */
 'use strict';
 
-var cursors; //destroy at statechange
+
 var player; //destroy at statechange
 var map;
 var layer;
 var game;
 var inDialog= false;
-
 var transitionTimer = 0;
 
 
@@ -50,6 +49,7 @@ Game.Play.prototype={
 // SHOP KEEP COORD 420,700
 
   create: function(){
+    // this.user = new User;
     this.map = map;
     this.map = this.game.add.tilemap('block');
     this.map.enableBody = true;
@@ -83,7 +83,6 @@ Game.Play.prototype={
     this.player.animations.add('up', [9, 10, 11], 10, true);
     this.player.anchor.set(0.5, 0.5);
 
-    this.cursors = cursors;
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
     this.game.camera.follow(this.player);
@@ -169,7 +168,6 @@ Game.Play.prototype={
     if(this.player.position.x > 1310 && this.player.position.x < 1330 && this.player.position.y > 670 && this.player.position.y < 680){
       inDialog=true;
       transitionTimer++;
-      // this.player.destroy();
 
       if(transitionTimer === 1){
         this.t1 = this.game.add.sprite(0, 0, 'tran1');
@@ -224,6 +222,9 @@ Game.Play.prototype={
         this.t13.fixedToCamera = true;
       }
       else if(transitionTimer === 80){
+        this.clearData();
+        // this.player.destroy();
+        // this.game.state.shutdown();
         this.game.state.start('dungeon');
       }
     }
@@ -258,5 +259,9 @@ Game.Play.prototype={
     inDialog = false;
     this.chatBox.visible = false;
     this.text.visible = false;
+  },
+
+  clearData: function(){
+    this.player.destroy();
   }
 };
