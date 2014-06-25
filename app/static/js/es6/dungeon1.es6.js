@@ -5,33 +5,31 @@ Game.Dungeon = function(){
   this.game = game;
 };
 
-var inDialog = false;
-var transitionTimer = 0;
 var inCombat = false;
 
 Game.Dungeon.prototype={
   preload: function(){
     this.game.load.image('map1', '/img/assets/cave/Dungeon1.png');
-    this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
+    // this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
 
     this.game.load.tilemap('caveBlock', '/img/assets/cave/caveBlock.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('blocked', '/img/assets/tilemaps/logoStuff.png');
 
     this.game.load.spritesheet('enemy', '/img/assets/sprites/player/characters2.png', 32, 34);
 
-    this.game.load.image('tran1', '/img/assets/transitions/transition1.png');
-    this.game.load.image('tran2', '/img/assets/transitions/transition2.png');
-    this.game.load.image('tran3', '/img/assets/transitions/transition3.png');
-    this.game.load.image('tran4', '/img/assets/transitions/transition4.png');
-    this.game.load.image('tran5', '/img/assets/transitions/transition5.png');
-    this.game.load.image('tran6', '/img/assets/transitions/transition6.png');
-    this.game.load.image('tran7', '/img/assets/transitions/transition7.png');
-    this.game.load.image('tran8', '/img/assets/transitions/transition8.png');
-    this.game.load.image('tran9', '/img/assets/transitions/transition9.png');
-    this.game.load.image('tran10', '/img/assets/transitions/transition10.png');
-    this.game.load.image('tran11', '/img/assets/transitions/transition11.png');
-    this.game.load.image('tran12', '/img/assets/transitions/transition12.png');
-    this.game.load.image('tran13', '/img/assets/transitions/transition13.png');
+    // this.game.load.image('tran1', '/img/assets/transitions/transition1.png');
+    // this.game.load.image('tran2', '/img/assets/transitions/transition2.png');
+    // this.game.load.image('tran3', '/img/assets/transitions/transition3.png');
+    // this.game.load.image('tran4', '/img/assets/transitions/transition4.png');
+    // this.game.load.image('tran5', '/img/assets/transitions/transition5.png');
+    // this.game.load.image('tran6', '/img/assets/transitions/transition6.png');
+    // this.game.load.image('tran7', '/img/assets/transitions/transition7.png');
+    // this.game.load.image('tran8', '/img/assets/transitions/transition8.png');
+    // this.game.load.image('tran9', '/img/assets/transitions/transition9.png');
+    // this.game.load.image('tran10', '/img/assets/transitions/transition10.png');
+    // this.game.load.image('tran11', '/img/assets/transitions/transition11.png');
+    // this.game.load.image('tran12', '/img/assets/transitions/transition12.png');
+    // this.game.load.image('tran13', '/img/assets/transitions/transition13.png');
   },
 
   create: function(){
@@ -60,7 +58,6 @@ Game.Dungeon.prototype={
     this.player.enableBody = true;
     this.player.anchor.set(0.5, 0.5);
     this.player.frame = 0;
-    this.player.immovable = false;
 
 
     this.game.physics.arcade.enable(this.player);
@@ -74,43 +71,41 @@ Game.Dungeon.prototype={
 
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
+    this.inDialog = false;
+
+    this.transitionTimer = 0;
+    this.hasReset = false;
   },
 
   update: function(){
-
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
 
-    if(this.cursors.left.isDown && !inDialog)
-    {
+    if(this.cursors.left.isDown && !this.inDialog){
       //  Move to the left
       this.player.body.velocity.x = -150;
 
       this.player.animations.play('left');
     }
-    else if(this.cursors.right.isDown && !inDialog)
-    {
+    else if(this.cursors.right.isDown && !this.inDialog){
       //  Move to the right
       this.player.body.velocity.x = 150;
 
       this.player.animations.play('right');
     }
-    else if(this.cursors.up.isDown && !inDialog)
-    {
+    else if(this.cursors.up.isDown && !this.inDialog){
       //  Move up
       this.player.body.velocity.y = -150;
 
       this.player.animations.play('up');
     }
-    else if(this.cursors.down.isDown && !inDialog)
-    {
+    else if(this.cursors.down.isDown && !this.inDialog){
       //  Move down
       this.player.body.velocity.y = 150;
 
       this.player.animations.play('down');
     }
-    else
-    {
+    else{
       //  Stand still
       this.player.animations.stop();
     }
@@ -190,7 +185,7 @@ Game.Dungeon.prototype={
 
 
     if(inCombat){
-      transitionTimer++;
+      this.transitionTimer += 1;
     }
 
   },
@@ -203,62 +198,68 @@ Game.Dungeon.prototype={
   },
 
   combat: function(){
-    inDialog = true;
+    if(!this.hasReset){
+      this.transitionTimer = 0;
+      this.hasReset = true;
+    }
+    this.inDialog = true;
     inCombat = true;
+    this.player.immovable = true;
+    this.enemy1.immovable = true;
 
-    if(transitionTimer === 1){
+    if(this.transitionTimer < 1){
       this.t1 = this.game.add.sprite(0, 0, 'tran1');
       this.t1.fixedToCamera = true;
     }
-    else if(transitionTimer === 6){
+    else if(this.transitionTimer < 6){
       this.t2 = this.game.add.sprite(0, 0, 'tran2');
       this.t2.fixedToCamera = true;
     }
-    else if(transitionTimer === 12){
+    else if(this.transitionTimer < 12){
       this.t3 = this.game.add.sprite(0, 0, 'tran3');
       this.t3.fixedToCamera = true;
     }
-    else if(transitionTimer === 18){
+    else if(this.transitionTimer < 18){
       this.t4 = this.game.add.sprite(0, 0, 'tran4');
       this.t4.fixedToCamera = true;
     }
-    else if(transitionTimer === 24){
+    else if(this.transitionTimer < 24){
       this.t5 = this.game.add.sprite(0, 0, 'tran5');
       this.t5.fixedToCamera = true;
     }
-    else if(transitionTimer === 30){
+    else if(this.transitionTimer < 30){
       this.t6 = this.game.add.sprite(0, 0, 'tran6');
       this.t6.fixedToCamera = true;
     }
-    else if(transitionTimer === 36){
+    else if(this.transitionTimer < 36){
       this.t7 = this.game.add.sprite(0, 0, 'tran7');
       this.t7.fixedToCamera = true;
     }
-    else if(transitionTimer === 42){
+    else if(this.transitionTimer < 42){
       this.t8 = this.game.add.sprite(0, 0, 'tran8');
       this.t8.fixedToCamera = true;
     }
-    else if(transitionTimer === 48){
+    else if(this.transitionTimer < 48){
       this.t9 = this.game.add.sprite(0, 0, 'tran9');
       this.t9.fixedToCamera = true;
     }
-    else if(transitionTimer === 54){
+    else if(this.transitionTimer < 54){
       this.t10 = this.game.add.sprite(0, 0, 'tran10');
       this.t10.fixedToCamera = true;
     }
-    else if(transitionTimer === 60){
+    else if(this.transitionTimer < 60){
       this.t11 = this.game.add.sprite(0, 0, 'tran11');
       this.t11.fixedToCamera = true;
     }
-    else if(transitionTimer === 66){
+    else if(this.transitionTimer < 66){
       this.t12 = this.game.add.sprite(0, 0, 'tran12');
       this.t12.fixedToCamera = true;
     }
-    else if(transitionTimer === 72){
+    else if(this.transitionTimer < 72){
       this.t13 = this.game.add.sprite(0, 0, 'tran13');
       this.t13.fixedToCamera = true;
     }
-    else if(transitionTimer === 80){
+    else if(this.transitionTimer < 80){
       this.game.state.start('combat');
     }
   }

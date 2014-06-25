@@ -12,6 +12,7 @@ function ajax(url, type, data={}, success= r => console.log(r), dataType='html')
 }
 
 var menu;
+var user1;
 
 Game.Load = function(){
   this.game = game;
@@ -48,7 +49,9 @@ Game.Load.prototype = {
   },
 
   spaceDown: function(){
-    ajax('/create', 'post', null, ()=>{}, 'json');
+    ajax('/create', 'post', null, user=>{
+      user1 = user.user;
+    }, 'json');
     this.game.state.start('play');
   }
 

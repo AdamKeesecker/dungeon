@@ -1,4 +1,4 @@
-/* global Game, game, Phaser, _ */
+/* global Game, game, Phaser, _, user1 */
 'use strict';
 
 Game.Combat = function(){
@@ -15,21 +15,7 @@ var timer2 = 0;
 var swings;
 var swings2;
 var swing1, swing2, swing3, swing4, swing5, swing6;
-var user;
 
-
-function ajax(url, type, data={}, success= r => console.log(r), dataType='html'){
-  $.ajax({
-    url:url,
-    type:type,
-    dataType:dataType,
-    data:data,
-    success:success
-  });
-}
-ajax('/find', 'get', null, response=>{
-  user = response.user;
-}, 'json');
 
 Game.Combat.prototype = {
   preload: function(){
@@ -53,17 +39,22 @@ Game.Combat.prototype = {
     this.game.load.image('swing6', '/img/assets/battle/swipe3.png');
     this.game.load.image('healthP', '/img/assets/battle/healthbarPclean.png');
     this.game.load.image('healthE', '/img/assets/battle/healthbarEclean.png');
-    this.game.load.image('1', '/img/assets/battle/1.png');
-    this.game.load.image('2', '/img/assets/battle/2.png');
-    this.game.load.image('3', '/img/assets/battle/3.png');
-    this.game.load.image('4', '/img/assets/battle/4.png');
-    this.game.load.image('5', '/img/assets/battle/5.png');
-    this.game.load.image('6', '/img/assets/battle/6.png');
-    this.game.load.image('7', '/img/assets/battle/7.png');
-    this.game.load.image('8', '/img/assets/battle/8.png');
-    this.game.load.image('9', '/img/assets/battle/9.png');
-    this.game.load.image('10', '/img/assets/battle/10.png');
+    this.game.load.image('1Dmg', '/img/assets/battle/1.png');
+    this.game.load.image('2Dmg', '/img/assets/battle/2.png');
+    this.game.load.image('3Dmg', '/img/assets/battle/3.png');
+    this.game.load.image('4Dmg', '/img/assets/battle/4.png');
+    this.game.load.image('5Dmg', '/img/assets/battle/5.png');
+    this.game.load.image('6Dmg', '/img/assets/battle/6.png');
+    this.game.load.image('7Dmg', '/img/assets/battle/7.png');
+    this.game.load.image('8Dmg', '/img/assets/battle/8.png');
+    this.game.load.image('9Dmg', '/img/assets/battle/9.png');
+    this.game.load.image('10Dmg', '/img/assets/battle/10.png');
     this.game.load.image('bar', '/img/assets/battle/singleBar.png');
+    this.game.load.image('defUp', '/img/assets/battle/defUp.png');
+
+    this.game.load.image('longswordC', '/img/assets/battle/longSword.gif');
+    this.game.load.image('masterswordC', '/img/assets/battle/masterSword.gif');
+    this.game.load.image('giantswordC', '/img/assets/battle/sword.png');
   },
 
   create: function(){
@@ -72,16 +63,20 @@ Game.Combat.prototype = {
 
     this.selects = this.game.add.group();
     this.selects.create(225, 400, 'attack');
-    this.selects.create(225, 450, 'defend');
-    this.selects.create(355, 400, 'magic');
-    this.selects.create(355, 450, 'potion');
+    this.selects.create(355, 400, 'defend');
+    // this.selects.create(355, 400, 'magic');
+    // this.selects.create(355, 450, 'potion');
     this.selects.setAll('scale.x', 2);
     this.selects.setAll('scale.y', 2);
     this.selects.visible = true;
 
     this.cursor = this.selects.create(210, 400, 'cursor');
 
+
     this.player = this.game.add.sprite(120, 245, 'player');
+    this.cursors = this.game.input.keyboard.createCursorKeys();
+
+
     this.player.scale.setTo(1.5, 1.5);
     this.player.frame = 7;
     this.player.health = 10;
@@ -98,14 +93,12 @@ Game.Combat.prototype = {
     this.enemyWeapon.scale.x = -1.5;
     this.enemyWeapon.angle = 320;
 
-    this.cursors = this.game.input.keyboard.createCursorKeys();
+    this.attackStop = _.debounce(this.attackPhase, 500);
+    this.defendStop = _.debounce(this.defendPhase, 500);
+    // this.magicStop = _.debounce(this.magicPhase, 200);
+    // this.potionStop = _.debounce(this.usePotion, 200);
 
-    this.attackStop = _.debounce(this.attackPhase, 200);
-    this.defendStop = _.debounce(this.defendPhase, 200);
-    this.magicStop = _.debounce(this.magicPhase, 200);
-    this.potionStop = _.debounce(this.usePotion, 200);
-
-    this.turnSwap = _.debounce(this.flipTurn, 200);
+    this.turnSwap = _.debounce(this.flipTurn, 500);
 
 
     this.swings = this.game.add.group();
@@ -134,38 +127,50 @@ Game.Combat.prototype = {
       var space2 = j * 15;
       this.healthBarEnemy.create(640 - space2, 48, 'bar').scale.setTo(2,1);
     }
+
+    if(user1.dungeonBeat === true){
+      firstCreate2 = true;
+      attackAllowed = true;
+      isEnemySwipe = false;
+      firstCreate = true;
+      myTurn = true;
+      timer = 0;
+      timer2 = 0;
+    }
   },
 
   update: function(){
     if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && attackAllowed){
       if(this.cursor.position.x === 210 && this.cursor.position.y === 400){
+        console.log('anything?');
         this.attackStop();
       }
-      else if(this.cursor.position.x === 210 && this.cursor.position.y === 450){
+      else if(this.cursor.position.x === 340 && this.cursor.position.y === 400){
         this.defendStop();
       }
-      else if(this.cursor.position.x === 340 && this.cursor.position.y === 400){
-        //CHECK IF USER KNOWS MAGIC SPELLS
-        //ELSE ('NO SPELLS')
-        this.magicStop();
-      }
-      else if(this.cursor.position.x === 340 && this.cursor.position.y === 450){
-        this.potionStop();
-      }
+      // else if(this.cursor.position.x === 340 && this.cursor.position.y === 400){
+      //   //CHECK IF USER KNOWS MAGIC SPELLS
+      //   //ELSE ('NO SPELLS')
+      //   this.magicStop();
+      // }
+      // else if(this.cursor.position.x === 340 && this.cursor.position.y === 450){
+      //   this.potionStop();
+      // }
     }
 
     if(this.cursors.left.isDown && myTurn && this.cursor.position.x === 340){
+      console.log('anything at all?');
       this.cursor.position.x = 210;
     }
     else if(this.cursors.right.isDown && myTurn && this.cursor.position.x === 210){
       this.cursor.position.x = 340;
     }
-    else if(this.cursors.down.isDown && myTurn && this.cursor.position.y === 400){
-      this.cursor.position.y = 450;
-    }
-    else if(this.cursors.up.isDown && myTurn && this.cursor.position.y === 450){
-      this.cursor.position.y = 400;
-    }
+    // else if(this.cursors.down.isDown && myTurn && this.cursor.position.y === 400){
+    //   this.cursor.position.y = 450;
+    // }
+    // else if(this.cursors.up.isDown && myTurn && this.cursor.position.y === 450){
+    //   this.cursor.position.y = 400;
+    // }
 
     this.checkDead();
   },
@@ -179,22 +184,21 @@ Game.Combat.prototype = {
       if(this.turn){
         this.turn.destroy();
       }
-      this.turn = this.game.add.sprite(this.game.world.centerX, 200, 'yourTurn');
+      this.turn = this.game.add.sprite(350, 200, 'yourTurn');
       this.selects.visible = true;
     }
-    else if(!myTurn){
+    else if(!myTurn && this.enemy.health > 0){
       if(this.turn){
         this.turn.destroy();
       }
-      this.turn = this.game.add.sprite(this.game.world.centerX, 200, 'enemyTurn');
+      this.turn = this.game.add.sprite(350, 200, 'enemyTurn');
       this.selects.visible = false;
     }
     this.turn.scale.setTo(3,3);
     this.turn.anchor.setTo(0.5,0.5);
-    // this.turn.alpha = 0;
     this.game.add.tween(this.turn).to({alpha:1}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
     this.game.time.events.add(Phaser.Timer.SECOND * 4, this.killTurnMessage, this.turn);
-    if(!myTurn){
+    if(!myTurn && this.enemy.health > 0){
       this.enemyPhase();
     }
     if(myTurn){
@@ -220,19 +224,22 @@ Game.Combat.prototype = {
   },
 
   defendPhase: function(){
-
-    myTurn = !myTurn;
+    this.player.defense += 1;
+    this.def = this.game.add.sprite(100, 200, 'defUp');
+    this.def.scale.setTo(2,2);
+    this.game.add.tween(this.def).to({y: 100}, 3000, Phaser.Easing.Cubic.Out, true);
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, this.flipTurn, this);
   },
 
-  magicPhase: function(){
+  // magicPhase: function(){
 
-    myTurn = !myTurn;
-  },
+    // myTurn = !myTurn;
+  // },
 
-  usePotion: function(){
+  // usePotion: function(){
 
-    myTurn = !myTurn;
-  },
+    // myTurn = !myTurn;
+  // },
 
   killSwing: function(){
     if(isEnemySwipe){
@@ -334,13 +341,20 @@ Game.Combat.prototype = {
   },
 
   enemyPhase: function(){
-    isEnemySwipe = true;
-    timer2 = 0;
-    this.timer2 = setInterval(this.enemySwipe, 100);
-    this.dealDamage();
-    this.game.time.events.add(Phaser.Timer.SECOND * 1, this.clearTimer, this);
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.4, this.killSwing, this.swing6);
-    this.game.time.events.add(Phaser.Timer.SECOND * 1, this.flipTurn, this);
+    if(this.enemy.health > 0){
+      isEnemySwipe = true;
+      timer2 = 0;
+      this.timer2 = setInterval(this.enemySwipe, 100);
+      this.dealDamage();
+      this.game.time.events.add(Phaser.Timer.SECOND * 1, this.clearTimer, this);
+      this.game.time.events.add(Phaser.Timer.SECOND * 0.4, this.killSwing, this.swing6);
+      this.game.time.events.add(Phaser.Timer.SECOND * 1, this.flipTurn, this);
+    }
+    // else{
+    //   this.attackAllowed = true;
+    //   this.myTurn = true;
+    //   this.isEnemySwipe = false;
+    // }
   },
 
   clearTimer: function () {
@@ -355,33 +369,60 @@ Game.Combat.prototype = {
   dealDamage: function(){
     var number;
     if(myTurn){
-      if(user.weapon === 'stick'){
-        this.weapon.damage = this.game.rnd.integerInRange(1, 5);
-        number = this.weapon.damage.toString();
-        var realDmg = this.weapon.damage - this.player.defense;
-        this.dmg = this.game.add.image(550, 150, number);
-        this.dmg.scale.setTo(2, 2);
-        this.enemy.health -= realDmg;
-        this.game.time.events.add(Phaser.Timer.SECOND * 1, this.killNum, this);
-        this.updateHealthBars();
-      }
+        if(user1.weapon === 'stick'){
+          this.weapon.damage = this.game.rnd.integerInRange(1, 5);
+        }
+        else if(user1.weapon === 'longsword'){
+          this.weapon.damage = this.game.rnd.integerInRange(2, 7);
+        }
+        else if(user1.weapon === 'mastersword'){
+          this.weapon.damage = this.game.rnd.integerInRange(3, 8);
+        }
+        else if(user1.weapon === 'giantsword'){
+          this.weapon.damage = this.game.rnd.integerInRange(5, 10);
+        }
+      number = this.weapon.damage.toString();
+      this.dmg = this.game.add.image(550, 150, number +'Dmg');
+      this.dmg.scale.setTo(2, 2);
+      this.enemy.health -= number;
+      this.game.time.events.add(Phaser.Timer.SECOND * 1, this.killNum, this);
+      this.updateHealthBars();
     }
     else if(!myTurn){
       this.enemy.weaponDmg = this.game.rnd.integerInRange(1,3);
       number = this.enemy.weaponDmg.toString();
-      console.log(number);
-      this.dmg = this.game.add.image(120, 150, number);
+      var realDmgE = number - this.player.defense;
+      if(realDmgE < 1){
+        realDmgE = 1;
+      }
+      this.dmg = this.game.add.image(120, 150, realDmgE +'Dmg');
       this.dmg.scale.setTo(2, 2);
-      this.player.health -= number;
+      this.player.health -= realDmgE;
       this.game.time.events.add(Phaser.Timer.SECOND * 1, this.killNum, this);
       this.updateHealthBars();
     }
   },
 
   weaponCheck: function(){
-    if(user.weapon === 'stick'){
-      this.weapon = this.game.add.sprite(135, 250, 'stick');
-      this.weapon.scale.setTo(0.2, 0.2);
+    if(user1){
+      console.log(user1);
+      if(user1.weapon === 'stick'){
+        this.weapon = this.game.add.sprite(135, 250, 'stick');
+        this.weapon.scale.setTo(0.2, 0.2);
+      }
+      else if(user1.weapon === 'longsword'){
+        this.weapon = this.game.add.sprite(120, 240, 'longswordC');
+        this.weapon.scale.setTo(0.3, 0.3);
+      }
+      else if(user1.weapon === 'mastersword'){
+        this.weapon = this.game.add.sprite(150, 250, 'masterswordC');
+        this.weapon.scale.setTo(0.3, 0.3);
+        this.weapon.angle = 15;
+      }
+      else if(user1.weapon === 'giantsword'){
+        this.weapon = this.game.add.sprite(145, 250, 'giantswordC');
+        this.weapon.scale.setTo(0.2, 0.2);
+      }
     }
   },
 
@@ -410,12 +451,28 @@ Game.Combat.prototype = {
 
   checkDead: function(){
     if(this.player.health < 1){
-      // game.state.start('deathScreen');
-      console.log('dead');
+      // this.attackAllowed = true;
+      // this.myTurn = true;
+      // this.isEnemySwipe = false;
+      this.game.state.start('dead');
     }
     if(this.enemy.health < 1){
-      // game.state.start('return');
-      console.log('enemy dead');
+      this.game.time.events.add(Phaser.Timer.SECOND * 3, this.startLoot, this);
+      /*
+      show you win message
+      show loot collected
+      wait three seconds
+      send to dungeon with enemy defeated
+      (dungeon2)
+      leave dungeon
+      (play2)
+      message to buy stuff
+      vendor is there
+      */
     }
+  },
+
+  startLoot: function(){
+    this.game.state.start('finishedCombat');
   }
 };
