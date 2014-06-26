@@ -10,7 +10,7 @@ var inCombat = false;
 Game.Dungeon.prototype={
   preload: function(){
     this.game.load.image('map1', '/img/assets/cave/Dungeon1.png');
-    // this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
+    this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
 
     this.game.load.tilemap('caveBlock', '/img/assets/cave/caveBlock.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('blocked', '/img/assets/tilemaps/logoStuff.png');
@@ -69,6 +69,11 @@ Game.Dungeon.prototype={
     this.enemy1.enableBody = true;
     this.enemy1.frame = 58;
 
+    this.enemy1.animations.add('enemyDown', [57, 58, 59], 10, true);
+    this.enemy1.animations.add('enemyLeft', [69, 70, 71], 10, true);
+    this.enemy1.animations.add('enemyRight', [81, 82, 83], 10, true);
+    this.enemy1.animations.add('enemyUp', [93, 94, 95], 10, true);
+
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
     this.inDialog = false;
@@ -117,7 +122,7 @@ Game.Dungeon.prototype={
 
       if(this.player.position.y - this.enemy1.position.y > 0){
         //player to the bottom right of enemy
-        if((this.player.position.x - this.enemy1.position.x < 100) && (this.player.position.y - this.enemy1.position.y < 100)){
+        if((this.player.position.x - this.enemy1.position.x < 250) && (this.player.position.y - this.enemy1.position.y < 250)){
           //player within 100px bottom right
           this.game.physics.arcade.moveToObject(this.enemy1, this.player, 100);
         }
@@ -130,7 +135,7 @@ Game.Dungeon.prototype={
 
       else if(this.enemy1.position.y - this.player.position.y > 0){
         //player to the top right of enemy
-        if((this.player.position.x - this.enemy1.position.x < 100) && (this.enemy1.position.y - this.player.position.y < 100)){
+        if((this.player.position.x - this.enemy1.position.x < 250) && (this.enemy1.position.y - this.player.position.y < 250)){
           //player within 100px top right
           this.game.physics.arcade.moveToObject(this.enemy1, this.player, 100);
         }
@@ -148,7 +153,7 @@ Game.Dungeon.prototype={
 
       if(this.player.position.y - this.enemy1.position.y > 0){
         //player to the bottom left of enemy
-        if((this.enemy1.position.x - this.player.position.x < 100) && (this.player.position.y - this.enemy1.position.y < 100)){
+        if((this.enemy1.position.x - this.player.position.x < 250) && (this.player.position.y - this.enemy1.position.y < 250)){
           //player within 100px bottom left
           this.game.physics.arcade.moveToObject(this.enemy1, this.player, 100);
         }
@@ -160,7 +165,7 @@ Game.Dungeon.prototype={
       }
       else if(this.enemy1.position.y - this.player.position.y > 0){
         //player to the top left of enemy
-        if((this.enemy1.position.x - this.player.position.x < 100) && (this.enemy1.position.y - this.player.position.y < 100)){
+        if((this.enemy1.position.x - this.player.position.x < 250) && (this.enemy1.position.y - this.player.position.y < 250)){
           //player within 100 px top left
           this.game.physics.arcade.moveToObject(this.enemy1, this.player, 100);
         }
@@ -172,8 +177,53 @@ Game.Dungeon.prototype={
       }
     }
 
-
-
+    if(this.enemy1.body.velocity.x > 0){
+      if(this.enemy1.body.velocity.y > 0){
+        if(this.enemy1.body.velocity.x > this.enemy1.body.velocity.y){
+          this.enemy1.animations.play('enemyRight');
+          // console.log('right');
+        }
+        else{
+          this.enemy1.animations.play('enemyDown');
+          // console.log('down');
+        }
+      }
+      else if(this.enemy1.body.velocity.y < 0){
+        if(this.enemy1.body.velocity.x > Math.abs(this.enemy1.body.velocity.y)){
+          this.enemy1.animations.play('enemyRight');
+          // console.log('right');
+        }
+        else{
+          this.enemy1.animations.play('enemyUp');
+          // console.log('up');
+        }
+      }
+    }
+    else if(this.enemy1.body.velocity.x < 0){
+      if(this.enemy1.body.velocity.y > 0){
+        if(Math.abs(this.enemy1.body.velocity.x) > this.enemy1.body.velocity.y){
+          this.enemy1.animations.play('enemyLeft');
+          // console.log('left');
+        }
+        else{
+          this.enemy1.animations.play('enemyDown');
+          // console.log('down');
+        }
+      }
+      else if(this.enemy1.body.velocity.y < 0){
+        if(Math.abs(this.enemy1.body.velocity.x) > Math.abs(this.enemy1.body.velocity.y)){
+          this.enemy1.animations.play('enemyLeft');
+          // console.log('left');
+        }
+        else{
+          this.enemy1.animations.play('enemyUp');
+          // console.log('up');
+        }
+      }
+    }
+    else if(this.enemy1.body.velocity.x === 0 && this.enemy1.body.velocity.y === 0){
+      this.enemy1.frame = 58;
+    }
 
     this.game.physics.arcade.collide(this.enemy1, this.layer);
     this.game.physics.arcade.collide(this.player, this.layer);

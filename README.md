@@ -7,3 +7,6 @@ Server Template
 - Traceur
 - Jade
 - Less
+- Lodash
+
+Developed in a week and a half, using MEN(notA) stack and Phaser 2d game engine.

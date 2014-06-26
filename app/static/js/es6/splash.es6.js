@@ -69,7 +69,7 @@ Game.Splash.prototype = {
       this.counterCount2();
     }
 
-    if(this.counter > 800){
+    if(this.counter > 700){
       this.game.state.start('load');
     }
   },

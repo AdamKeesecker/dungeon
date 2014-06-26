@@ -62,15 +62,15 @@ Game.Combat.prototype = {
     this.bg.scale.setTo(1.5, 1.5);
 
     this.selects = this.game.add.group();
-    this.selects.create(225, 400, 'attack');
-    this.selects.create(355, 400, 'defend');
+    this.selects.create(245, 400, 'attack');
+    this.selects.create(375, 400, 'defend');
     // this.selects.create(355, 400, 'magic');
     // this.selects.create(355, 450, 'potion');
     this.selects.setAll('scale.x', 2);
     this.selects.setAll('scale.y', 2);
     this.selects.visible = true;
 
-    this.cursor = this.selects.create(210, 400, 'cursor');
+    this.cursor = this.selects.create(230, 400, 'cursor');
 
 
     this.player = this.game.add.sprite(120, 245, 'player');
@@ -141,11 +141,10 @@ Game.Combat.prototype = {
 
   update: function(){
     if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && attackAllowed){
-      if(this.cursor.position.x === 210 && this.cursor.position.y === 400){
-        console.log('anything?');
+      if(this.cursor.position.x === 230 && this.cursor.position.y === 400){
         this.attackStop();
       }
-      else if(this.cursor.position.x === 340 && this.cursor.position.y === 400){
+      else if(this.cursor.position.x === 360 && this.cursor.position.y === 400){
         this.defendStop();
       }
       // else if(this.cursor.position.x === 340 && this.cursor.position.y === 400){
@@ -158,12 +157,11 @@ Game.Combat.prototype = {
       // }
     }
 
-    if(this.cursors.left.isDown && myTurn && this.cursor.position.x === 340){
-      console.log('anything at all?');
-      this.cursor.position.x = 210;
+    if(this.cursors.left.isDown && myTurn && this.cursor.position.x === 360){
+      this.cursor.position.x = 230;
     }
-    else if(this.cursors.right.isDown && myTurn && this.cursor.position.x === 210){
-      this.cursor.position.x = 340;
+    else if(this.cursors.right.isDown && myTurn && this.cursor.position.x === 230){
+      this.cursor.position.x = 360;
     }
     // else if(this.cursors.down.isDown && myTurn && this.cursor.position.y === 400){
     //   this.cursor.position.y = 450;

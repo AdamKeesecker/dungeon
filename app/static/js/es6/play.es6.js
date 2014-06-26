@@ -136,12 +136,13 @@ Game.Play.prototype={
 
     this.game.world.setBounds(0, 0, 1600, 1600);
 
-    this.player.frame = 0;
     this.player.animations.add('down', [0, 1, 2], 10, true);
     this.player.animations.add('left', [3, 4, 5], 10, true);
     this.player.animations.add('right', [6, 7, 8], 10, true);
     this.player.animations.add('up', [9, 10, 11], 10, true);
     this.player.anchor.set(0.5, 0.5);
+    this.player.frame = 0;
+
 
 
     this.game.camera.follow(this.player);
@@ -185,6 +186,7 @@ Game.Play.prototype={
     if(user1.dungeonBeat === true){
       this.transitionTimer = 0;
     }
+    console.log(this.player.body);
   },
 
   update: function(){
@@ -231,7 +233,7 @@ Game.Play.prototype={
       this.player.animations.stop();
     }
 
-    if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && (this.player.body.touching.up || this.player.body.touching.left || this.player.body.touching.right || this.player.body.touching.down)){
+    if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && (this.player.body.wasTouching.up || this.player.body.wasTouching.left || this.player.body.wasTouching.right || this.player.body.wasTouching.down)){
       this.showMessage();
     }
 
