@@ -6,6 +6,7 @@ class User{
     var user = new User();
     user.weapon = 'stick';
     user.gold = 0;
+    user.dungeonBeat = false;
     user.save();
     fn(user);
   }
