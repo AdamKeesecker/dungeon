@@ -28,6 +28,9 @@ Game.Load.prototype = {
     menu.scale.setTo(2, 2);
     this.game.input.keyboard.createCursorKeys();
     this.spaceCheck = _.debounce(this.spaceDown, 200);
+    ajax('/create', 'post', null, (function(user) {
+      user1 = user.user;
+    }), 'json');
   },
   update: function() {
     if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
@@ -35,10 +38,6 @@ Game.Load.prototype = {
     }
   },
   spaceDown: function() {
-    debugger;
-    ajax('/create', 'post', null, (function(user) {
-      user1 = user.user;
-    }), 'json');
     if (user1.ready === true) {
       this.game.state.start('play');
     }
