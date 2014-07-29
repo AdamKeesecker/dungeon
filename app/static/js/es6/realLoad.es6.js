@@ -1,4 +1,4 @@
-/* global Phaser, game, realLoad */
+/* global Phaser, game */
 
 'use strict';
 
@@ -142,5 +142,3 @@ Game.realLoad.prototype = {
     this.ready = true;
   }
 };
-
-module.exports = realLoad;
