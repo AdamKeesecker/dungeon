@@ -19,42 +19,42 @@ var swing1, swing2, swing3, swing4, swing5, swing6;
 
 Game.Combat.prototype = {
   preload: function(){
-    this.game.load.image('bg', '/img/assets/battle/emptyBattle.png');
-    this.game.load.spritesheet('player', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
-    this.game.load.spritesheet('enemy', '/img/assets/sprites/player/characters2.png', 32, 34);
-    this.game.load.spritesheet('dagger', '/img/assets/battle/attackSheet.png', 16, 32);
-    this.game.load.image('stick', '/img/assets/battle/stick.gif');
-    this.game.load.image('attack', '/img/assets/battle/attack.png');
-    this.game.load.image('defend', '/img/assets/battle/defend.png');
-    this.game.load.image('magic', '/img/assets/battle/magic.png');
-    this.game.load.image('potion', '/img/assets/battle/potion.png');
-    this.game.load.image('enemyTurn', '/img/assets/battle/enemyTurn.png');
-    this.game.load.image('yourTurn', '/img/assets/battle/yourTurn.png');
-    this.game.load.image('cursor', '/img/assets/battle/arrow.png');
-    this.game.load.image('swing1', '/img/assets/battle/swipe1.png');
-    this.game.load.image('swing2', '/img/assets/battle/swing2.png');
-    this.game.load.image('swing3', '/img/assets/battle/swipe3.png');
-    this.game.load.image('swing4', '/img/assets/battle/swipe1.png');
-    this.game.load.image('swing5', '/img/assets/battle/swing2.png');
-    this.game.load.image('swing6', '/img/assets/battle/swipe3.png');
-    this.game.load.image('healthP', '/img/assets/battle/healthbarPclean.png');
-    this.game.load.image('healthE', '/img/assets/battle/healthbarEclean.png');
-    this.game.load.image('1Dmg', '/img/assets/battle/1.png');
-    this.game.load.image('2Dmg', '/img/assets/battle/2.png');
-    this.game.load.image('3Dmg', '/img/assets/battle/3.png');
-    this.game.load.image('4Dmg', '/img/assets/battle/4.png');
-    this.game.load.image('5Dmg', '/img/assets/battle/5.png');
-    this.game.load.image('6Dmg', '/img/assets/battle/6.png');
-    this.game.load.image('7Dmg', '/img/assets/battle/7.png');
-    this.game.load.image('8Dmg', '/img/assets/battle/8.png');
-    this.game.load.image('9Dmg', '/img/assets/battle/9.png');
-    this.game.load.image('10Dmg', '/img/assets/battle/10.png');
-    this.game.load.image('bar', '/img/assets/battle/singleBar.png');
-    this.game.load.image('defUp', '/img/assets/battle/defUp.png');
-
-    this.game.load.image('longswordC', '/img/assets/battle/longSword.gif');
-    this.game.load.image('masterswordC', '/img/assets/battle/masterSword.gif');
-    this.game.load.image('giantswordC', '/img/assets/battle/sword.png');
+    // this.game.load.image('bg', '/img/assets/battle/emptyBattle.png');
+    // this.game.load.spritesheet('player', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
+    // this.game.load.spritesheet('enemy', '/img/assets/sprites/player/characters2.png', 32, 34);
+    // this.game.load.spritesheet('dagger', '/img/assets/battle/attackSheet.png', 16, 32);
+    // this.game.load.image('stick', '/img/assets/battle/stick.gif');
+    // this.game.load.image('attack', '/img/assets/battle/attack.png');
+    // this.game.load.image('defend', '/img/assets/battle/defend.png');
+    // this.game.load.image('magic', '/img/assets/battle/magic.png');
+    // this.game.load.image('potion', '/img/assets/battle/potion.png');
+    // this.game.load.image('enemyTurn', '/img/assets/battle/enemyTurn.png');
+    // this.game.load.image('yourTurn', '/img/assets/battle/yourTurn.png');
+    // this.game.load.image('cursor', '/img/assets/battle/arrow.png');
+    // this.game.load.image('swing1', '/img/assets/battle/swipe1.png');
+    // this.game.load.image('swing2', '/img/assets/battle/swing2.png');
+    // this.game.load.image('swing3', '/img/assets/battle/swipe3.png');
+    // this.game.load.image('swing4', '/img/assets/battle/swipe1.png');
+    // this.game.load.image('swing5', '/img/assets/battle/swing2.png');
+    // this.game.load.image('swing6', '/img/assets/battle/swipe3.png');
+    // this.game.load.image('healthP', '/img/assets/battle/healthbarPclean.png');
+    // this.game.load.image('healthE', '/img/assets/battle/healthbarEclean.png');
+    // this.game.load.image('1Dmg', '/img/assets/battle/1.png');
+    // this.game.load.image('2Dmg', '/img/assets/battle/2.png');
+    // this.game.load.image('3Dmg', '/img/assets/battle/3.png');
+    // this.game.load.image('4Dmg', '/img/assets/battle/4.png');
+    // this.game.load.image('5Dmg', '/img/assets/battle/5.png');
+    // this.game.load.image('6Dmg', '/img/assets/battle/6.png');
+    // this.game.load.image('7Dmg', '/img/assets/battle/7.png');
+    // this.game.load.image('8Dmg', '/img/assets/battle/8.png');
+    // this.game.load.image('9Dmg', '/img/assets/battle/9.png');
+    // this.game.load.image('10Dmg', '/img/assets/battle/10.png');
+    // this.game.load.image('bar', '/img/assets/battle/singleBar.png');
+    // this.game.load.image('defUp', '/img/assets/battle/defUp.png');
+    //
+    // this.game.load.image('longswordC', '/img/assets/battle/longSword.gif');
+    // this.game.load.image('masterswordC', '/img/assets/battle/masterSword.gif');
+    // this.game.load.image('giantswordC', '/img/assets/battle/sword.png');
   },
 
   create: function(){

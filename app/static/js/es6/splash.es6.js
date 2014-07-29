@@ -1,9 +1,8 @@
-/* global game */
-/* global Phaser */
+/* global game, Game */
 
 'use strict';
 
-var Game = {};
+
 // var layer;
 var map;
 
@@ -15,8 +14,8 @@ Game.Splash = function() {
 
 Game.Splash.prototype = {
   preload: function(){
-    this.game.load.tilemap('logo', '/img/assets/tilemaps/logo.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.image('logoStuff', '/img/assets/tilemaps/logoStuff.png');
+    // this.game.load.tilemap('logo', '/img/assets/tilemaps/logo.json', null, Phaser.Tilemap.TILED_JSON);
+    // this.game.load.image('logoStuff', '/img/assets/tilemaps/logoStuff.png');
   },
 
   create: function(){

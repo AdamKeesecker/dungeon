@@ -21,9 +21,9 @@ Game.Load = function(){
 
 Game.Load.prototype = {
   preload: function(){
-    this.game.load.image('menu', '/img/assets/tilemaps/menu.png');
-    this.game.load.image('new', '/img/assets/tilemaps/newGame.png');
-    this.game.load.image('load', '/img/assets/tilemaps/loadGame.png');
+    // this.game.load.image('menu', '/img/assets/tilemaps/menu.png');
+    // this.game.load.image('new', '/img/assets/tilemaps/newGame.png');
+    // this.game.load.image('load', '/img/assets/tilemaps/loadGame.png');
   },
 
   create: function(){

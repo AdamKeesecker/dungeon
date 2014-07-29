@@ -15,6 +15,7 @@
   function initPhaser(){
     game = new Phaser.Game(700, 500, Phaser.AUTO, 'game');
 
+    game.state.add('realLoad', Game.realLoad);//LOADING SCREEN
     game.state.add('splash', Game.Splash);    //MY LOGO
     game.state.add('load', Game.Load);        //MENU
     game.state.add('play', Game.Play);        //TEH GAMEZZZ
@@ -25,6 +26,6 @@
 
 
 
-    game.state.start('splash');
+    game.state.start('realLoad');
   }
 })();

@@ -12,70 +12,70 @@ Game.Play = function(){
 
 Game.Play.prototype={
   preload: function(){
-    this.game.load.tilemap('block', '/img/assets/tilemaps/blocks.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.image('pkmn', '/img/assets/tilemaps/pkmnTileset2.png');
-
-    this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
-    this.game.load.image('map', '/img/assets/tilemaps/map.png');
-    this.game.load.image('overlay', '/img/assets/tilemaps/mapOverlay.png');
-    this.game.load.image('underbridge', '/img/assets/tilemaps/underbridge.png');
-
-    this.game.load.spritesheet('guard', '/img/assets/sprites/player/Characters3.png', 32, 34);
-
-    this.game.load.image('chatBox', '/img/assets/tilemaps/chatSquare.png');
-
-    this.game.load.bitmapFont('textFont', '/img/assets/font/font.png', '/img/assets/font/font.fnt');
-
-
-    this.game.load.image('tran1', '/img/assets/transitions/transition1.png');
-    this.game.load.image('tran2', '/img/assets/transitions/transition2.png');
-    this.game.load.image('tran3', '/img/assets/transitions/transition3.png');
-    this.game.load.image('tran4', '/img/assets/transitions/transition4.png');
-    this.game.load.image('tran5', '/img/assets/transitions/transition5.png');
-    this.game.load.image('tran6', '/img/assets/transitions/transition6.png');
-    this.game.load.image('tran7', '/img/assets/transitions/transition7.png');
-    this.game.load.image('tran8', '/img/assets/transitions/transition8.png');
-    this.game.load.image('tran9', '/img/assets/transitions/transition9.png');
-    this.game.load.image('tran10', '/img/assets/transitions/transition10.png');
-    this.game.load.image('tran11', '/img/assets/transitions/transition11.png');
-    this.game.load.image('tran12', '/img/assets/transitions/transition12.png');
-    this.game.load.image('tran13', '/img/assets/transitions/transition13.png');
-
-    this.game.load.spritesheet('shopKeep', '/img/assets/sprites/player/Characters4.png', 32, 34);
-
-    this.game.load.image('longsword', '/img/assets/battle/longSword.gif');
-    this.game.load.image('mastersword', '/img/assets/battle/masterSword.gif');
-    this.game.load.image('giantsword', '/img/assets/battle/sword.png');
-
-    this.game.load.image('weaponArrow', '/img/assets/battle/arrow.png');
-
-    this.game.load.image('5', '/img/assets/shop/5g.png');
-    this.game.load.image('10', '/img/assets/shop/10g.png');
-    this.game.load.image('15', '/img/assets/shop/15g.png');
-
-    this.game.load.image('bag', '/img/assets/shop/goldBag.png');
-
-    this.game.load.image('0', '/img/assets/shop/00.png');
-    this.game.load.image('1', '/img/assets/shop/01.png');
-    this.game.load.image('2', '/img/assets/shop/02.png');
-    this.game.load.image('3', '/img/assets/shop/03.png');
-    this.game.load.image('4', '/img/assets/shop/04.png');
-    this.game.load.image('5', '/img/assets/shop/05.png');
-    this.game.load.image('6', '/img/assets/shop/06.png');
-    this.game.load.image('7', '/img/assets/shop/07.png');
-    this.game.load.image('8', '/img/assets/shop/08.png');
-    this.game.load.image('9', '/img/assets/shop/09.png');
-    this.game.load.image('10', '/img/assets/shop/10.png');
-    this.game.load.image('11', '/img/assets/shop/11.png');
-    this.game.load.image('12', '/img/assets/shop/12.png');
-    this.game.load.image('13', '/img/assets/shop/13.png');
-    this.game.load.image('14', '/img/assets/shop/14.png');
-    this.game.load.image('15', '/img/assets/shop/15.png');
-    this.game.load.image('16', '/img/assets/shop/16.png');
-    this.game.load.image('17', '/img/assets/shop/17.png');
-    this.game.load.image('18', '/img/assets/shop/18.png');
-    this.game.load.image('19', '/img/assets/shop/19.png');
-    this.game.load.image('20', '/img/assets/shop/20.png');
+    // this.game.load.tilemap('block', '/img/assets/tilemaps/blocks.json', null, Phaser.Tilemap.TILED_JSON);
+    // this.game.load.image('pkmn', '/img/assets/tilemaps/pkmnTileset2.png');
+    //
+    // this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
+    // this.game.load.image('map', '/img/assets/tilemaps/map.png');
+    // this.game.load.image('overlay', '/img/assets/tilemaps/mapOverlay.png');
+    // this.game.load.image('underbridge', '/img/assets/tilemaps/underbridge.png');
+    //
+    // this.game.load.spritesheet('guard', '/img/assets/sprites/player/Characters3.png', 32, 34);
+    //
+    // this.game.load.image('chatBox', '/img/assets/tilemaps/chatSquare.png');
+    //
+    // this.game.load.bitmapFont('textFont', '/img/assets/font/font.png', '/img/assets/font/font.fnt');
+    //
+    //
+    // this.game.load.image('tran1', '/img/assets/transitions/transition1.png');
+    // this.game.load.image('tran2', '/img/assets/transitions/transition2.png');
+    // this.game.load.image('tran3', '/img/assets/transitions/transition3.png');
+    // this.game.load.image('tran4', '/img/assets/transitions/transition4.png');
+    // this.game.load.image('tran5', '/img/assets/transitions/transition5.png');
+    // this.game.load.image('tran6', '/img/assets/transitions/transition6.png');
+    // this.game.load.image('tran7', '/img/assets/transitions/transition7.png');
+    // this.game.load.image('tran8', '/img/assets/transitions/transition8.png');
+    // this.game.load.image('tran9', '/img/assets/transitions/transition9.png');
+    // this.game.load.image('tran10', '/img/assets/transitions/transition10.png');
+    // this.game.load.image('tran11', '/img/assets/transitions/transition11.png');
+    // this.game.load.image('tran12', '/img/assets/transitions/transition12.png');
+    // this.game.load.image('tran13', '/img/assets/transitions/transition13.png');
+    //
+    // this.game.load.spritesheet('shopKeep', '/img/assets/sprites/player/Characters4.png', 32, 34);
+    //
+    // this.game.load.image('longsword', '/img/assets/battle/longSword.gif');
+    // this.game.load.image('mastersword', '/img/assets/battle/masterSword.gif');
+    // this.game.load.image('giantsword', '/img/assets/battle/sword.png');
+    //
+    // this.game.load.image('weaponArrow', '/img/assets/battle/arrow.png');
+    //
+    // this.game.load.image('5', '/img/assets/shop/5g.png');
+    // this.game.load.image('10', '/img/assets/shop/10g.png');
+    // this.game.load.image('15', '/img/assets/shop/15g.png');
+    //
+    // this.game.load.image('bag', '/img/assets/shop/goldBag.png');
+    //
+    // this.game.load.image('0', '/img/assets/shop/00.png');
+    // this.game.load.image('1', '/img/assets/shop/01.png');
+    // this.game.load.image('2', '/img/assets/shop/02.png');
+    // this.game.load.image('3', '/img/assets/shop/03.png');
+    // this.game.load.image('4', '/img/assets/shop/04.png');
+    // this.game.load.image('5', '/img/assets/shop/05.png');
+    // this.game.load.image('6', '/img/assets/shop/06.png');
+    // this.game.load.image('7', '/img/assets/shop/07.png');
+    // this.game.load.image('8', '/img/assets/shop/08.png');
+    // this.game.load.image('9', '/img/assets/shop/09.png');
+    // this.game.load.image('10', '/img/assets/shop/10.png');
+    // this.game.load.image('11', '/img/assets/shop/11.png');
+    // this.game.load.image('12', '/img/assets/shop/12.png');
+    // this.game.load.image('13', '/img/assets/shop/13.png');
+    // this.game.load.image('14', '/img/assets/shop/14.png');
+    // this.game.load.image('15', '/img/assets/shop/15.png');
+    // this.game.load.image('16', '/img/assets/shop/16.png');
+    // this.game.load.image('17', '/img/assets/shop/17.png');
+    // this.game.load.image('18', '/img/assets/shop/18.png');
+    // this.game.load.image('19', '/img/assets/shop/19.png');
+    // this.game.load.image('20', '/img/assets/shop/20.png');
   },
 
   create: function(){

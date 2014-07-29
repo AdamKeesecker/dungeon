@@ -9,13 +9,13 @@ var inCombat = false;
 
 Game.Dungeon.prototype={
   preload: function(){
-    this.game.load.image('map1', '/img/assets/cave/Dungeon1.png');
-    this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
-
-    this.game.load.tilemap('caveBlock', '/img/assets/cave/caveBlock.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.image('blocked', '/img/assets/tilemaps/logoStuff.png');
-
-    this.game.load.spritesheet('enemy', '/img/assets/sprites/player/characters2.png', 32, 34);
+    // this.game.load.image('map1', '/img/assets/cave/Dungeon1.png');
+    // this.game.load.spritesheet('player1', '/img/assets/sprites/player/MainWarrior.png', 32, 34);
+    //
+    // this.game.load.tilemap('caveBlock', '/img/assets/cave/caveBlock.json', null, Phaser.Tilemap.TILED_JSON);
+    // this.game.load.image('blocked', '/img/assets/tilemaps/logoStuff.png');
+    //
+    // this.game.load.spritesheet('enemy', '/img/assets/sprites/player/characters2.png', 32, 34);
 
     // this.game.load.image('tran1', '/img/assets/transitions/transition1.png');
     // this.game.load.image('tran2', '/img/assets/transitions/transition2.png');

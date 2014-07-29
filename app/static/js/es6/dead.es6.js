@@ -7,7 +7,7 @@ Game.Dead = function(){
 
 Game.Dead.prototype = {
   preload: function(){
-    this.game.load.image('skull', '/img/assets/dead/skull.png');
+    // this.game.load.image('skull', '/img/assets/dead/skull.png');
   },
 
   create: function(){
