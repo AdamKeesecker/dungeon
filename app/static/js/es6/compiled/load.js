@@ -35,6 +35,7 @@ Game.Load.prototype = {
   spaceDown: function() {
     ajax('/create', 'post', null, (function(user) {
       user1 = user.user;
+      debugger;
     }), 'json');
     this.game.state.start('play');
   }

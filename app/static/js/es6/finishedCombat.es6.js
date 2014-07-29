@@ -8,11 +8,6 @@ Game.FinishedCombat = function(){
 
 Game.FinishedCombat.prototype = {
   preload: function(){
-    // this.game.load.image('chest', '/img/assets/loot/closedChest.jpeg');
-    // this.game.load.image('gold', '/img/assets/loot/gold.png');
-    // this.game.load.image('loot', '/img/assets/loot/lootGained.png');
-    // this.game.load.image('xGold', '/img/assets/loot/xGold.png');
-    // this.game.load.spritesheet('number', '/img/assets/loot/numberSheet.png', 8, 8);
   },
 
   create: function(){
