@@ -5,12 +5,14 @@ function ajax(url, type) {
     return console.log(r);
   });
   var dataType = arguments[4] !== (void 0) ? arguments[4] : 'html';
+  var async = arguments[5] !== (void 0) ? arguments[5] : false;
   $.ajax({
     url: url,
     type: type,
     dataType: dataType,
     data: data,
-    success: success
+    success: success,
+    async: async
   });
 }
 var menu;
@@ -37,7 +39,9 @@ Game.Load.prototype = {
     ajax('/create', 'post', null, (function(user) {
       user1 = user.user;
     }), 'json');
-    this.game.state.start('play');
+    if (user1.ready === true) {
+      this.game.state.start('play');
+    }
   }
 };
 
