@@ -38,9 +38,7 @@ Game.Load.prototype = {
     }
   },
   spaceDown: function() {
-    if (user1.ready === true) {
-      this.game.state.start('play');
-    }
+    this.game.state.start('play');
   }
 };
 
