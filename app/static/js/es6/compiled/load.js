@@ -17,6 +17,7 @@ function ajax(url, type) {
 }
 var menu;
 var user1;
+var space;
 Game.Load = function() {
   this.game = game;
   this.counter = 0;
@@ -26,6 +27,8 @@ Game.Load.prototype = {
   create: function() {
     menu = this.game.add.image(0, 0, 'menu');
     menu.scale.setTo(2, 2);
+    space = this.game.add.image(240, 300, 'space');
+    space.scale.setTo(2.5, 2.5);
     this.game.input.keyboard.createCursorKeys();
     this.spaceCheck = _.debounce(this.spaceDown, 200);
     ajax('/create', 'post', null, (function(user) {

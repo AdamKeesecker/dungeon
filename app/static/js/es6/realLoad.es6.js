@@ -127,6 +127,7 @@ Game.realLoad.prototype = {
     this.game.load.image('menu', '/img/assets/tilemaps/menu.png');
     this.game.load.image('new', '/img/assets/tilemaps/newGame.png');
     this.game.load.image('load', '/img/assets/tilemaps/loadGame.png');
+    this.game.load.image('space', '/img/assets/tilemaps/space.png');
     //load
     //splash
     this.game.load.tilemap('logo', '/img/assets/tilemaps/logo.json', null, Phaser.Tilemap.TILED_JSON);

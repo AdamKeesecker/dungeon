@@ -14,6 +14,7 @@ function ajax(url, type, data={}, success= r => console.log(r), dataType='html',
 
 var menu;
 var user1;
+var space;
 
 Game.Load = function(){
   this.game = game;
@@ -27,6 +28,8 @@ Game.Load.prototype = {
   create: function(){
     menu = this.game.add.image(0, 0, 'menu');
     menu.scale.setTo(2,2);
+    space = this.game.add.image(240, 300, 'space');
+    space.scale.setTo(2.5,2.5);
     this.game.input.keyboard.createCursorKeys();
     this.spaceCheck = _.debounce(this.spaceDown, 200);
     ajax('/create', 'post', null, user=>{
@@ -43,12 +46,4 @@ Game.Load.prototype = {
   spaceDown: function(){
     this.game.state.start('play');
   }
-
-  // newGame: function(){
-  //   this.game.state.start('play');
-  // },
-  //
-  // loadGame: function(){
-  //   this.game.state.start('play');
-  // }
 };

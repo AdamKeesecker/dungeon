@@ -14,8 +14,6 @@ Game.Splash = function() {
 
 Game.Splash.prototype = {
   preload: function(){
-    // this.game.load.tilemap('logo', '/img/assets/tilemaps/logo.json', null, Phaser.Tilemap.TILED_JSON);
-    // this.game.load.image('logoStuff', '/img/assets/tilemaps/logoStuff.png');
   },
 
   create: function(){
